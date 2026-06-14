@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket-Idol | 멤버십 인증 기반 가상 티켓팅</title>
+  <!-- SEO 메타 태그 -->
+  <meta name="description" content="가상 아이돌 멤버십 인증 및 실시간 콘서트 좌석 예매를 체험할 수 있는 프리미엄 티켓팅 플랫폼">
+  <!-- Google Fonts: Outfit (헤더용), Inter (본문용) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <!-- FontAwesome 아이콘 CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- 스타일시트 연동 -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 상단 네비게이션 바 -->
+  <header class="navbar">
+    <div class="nav-container">
+      <a href="#home" class="nav-logo" id="nav-logo-link">
+        <i class="fa-solid fa-ticket-simple logo-icon"></i>
+        <span>TICKET <span class="highlight">IDOL</span></span>
+      </a>
+      <nav class="nav-menu">
+        <a href="#home" class="nav-link active" id="nav-home-btn"><i class="fa-solid fa-house"></i> 홈</a>
+        <a href="#mypage" class="nav-link" id="nav-mypage-btn"><i class="fa-solid fa-user"></i> 마이페이지</a>
+      </nav>
+      <div class="nav-auth" id="auth-status-container">
+        <!-- 로그인 상태에 따라 동적으로 JS에서 렌더링됨 -->
+        <button class="btn btn-outline" id="open-login-btn">로그인 / 회원가입</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 SPA 컨테이너 -->
+  <main class="main-content">
+    
+    <!-- 1. 홈 섹션 (Home Section) -->
+    <section id="home-section" class="spa-section active">
+      <!-- 히어로 배너 -->
+      <div class="hero-banner">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="hero-badge"><i class="fa-solid fa-star"></i> MEMBERSHIP ONLY PRE-SALE</span>
+          <h1 class="hero-title">가장 빠르게 만나는<br>아티스트의 순간</h1>
+          <p class="hero-subtitle">아이돌 멤버십 인증을 완료하고 가상 티켓 선예매를 직접 체험해 보세요.</p>
+          <a href="#mypage" class="btn btn-primary btn-lg" id="hero-verify-btn">멤버십 인증하러 가기 <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <!-- 공연 목록 영역 -->
+      <div class="concert-section">
+        <div class="section-header">
+          <h2 class="section-title"><i class="fa-solid fa-fire"></i> 현재 오픈된 티켓팅 라인업</h2>
+          <p class="section-desc">멤버십 인증을 완료한 유저만 예매에 참여할 수 있습니다.</p>
+        </div>
+        
+        <!-- 공연 카드 그리드 (JS로 동적 렌더링 가능, 기본 뼈대는 정적/동적 결합) -->
+        <div class="concert-grid" id="concert-list">
+          <!-- Aespa 카드 -->
+          <div class="concert-card" data-id="aespa">
+            <div class="card-img-wrapper">
+              <img src="assets/poster_aespa.png" alt="aespa 콘서트 포스터" class="card-img">
+              <div class="card-badge vip">선예매 진행중</div>
+            </div>
+            <div class="card-info">
+              <span class="card-category">CONCERT</span>
+              <h3 class="card-title">aespa LIVE TOUR - SYNK: PARALLEL LINE</h3>
+              <p class="card-meta"><i class="fa-regular fa-calendar"></i> 2026.07.18 ~ 2026.07.19</p>
+              <p class="card-meta"><i class="fa-solid fa-location-dot"></i> KSPO DOME (올림픽체조경기장)</p>
+              <button class="btn btn-primary btn-block book-now-btn" data-id="aespa">티켓 예매하기</button>
+            </div>
+          </div>
+
+          <!-- NCT Dream 카드 -->
+          <div class="concert-card" data-id="nct">
+            <div class="card-img-wrapper">
+              <img src="assets/poster_nct.png" alt="NCT DREAM 콘서트 포스터" class="card-img">
+              <div class="card-badge vip">선예매 진행중</div>
+            </div>
+            <div class="card-info">
+              <span class="card-category">CONCERT</span>
+              <h3 class="card-title">NCT DREAM WORLD TOUR &lt;THE DREAM SHOW 3&gt;</h3>
+              <p class="card-meta"><i class="fa-regular fa-calendar"></i> 2026.08.01 ~ 2026.08.03</p>
+              <p class="card-meta"><i class="fa-solid fa-location-dot"></i> 고척스카이돔</p>
+              <button class="btn btn-primary btn-block book-now-btn" data-id="nct">티켓 예매하기</button>
+            </div>
+          </div>
+
+          <!-- IVE 카드 -->
+          <div class="concert-card" data-id="ive">
+            <div class="card-img-wrapper">
+              <img src="assets/poster_ive.png" alt="IVE 콘서트 포스터" class="card-img">
+              <div class="card-badge vip">선예매 진행중</div>
+            </div>
+            <div class="card-info">
+              <span class="card-category">CONCERT</span>
+              <h3 class="card-title">IVE WORLD TOUR &lt;COSMIC ECHOES&gt;</h3>
+              <p class="card-meta"><i class="fa-regular fa-calendar"></i> 2026.08.15 ~ 2026.08.16</p>
+              <p class="card-meta"><i class="fa-solid fa-location-dot"></i> KSPO DOME (올림픽체조경기장)</p>
+              <button class="btn btn-primary btn-block book-now-btn" data-id="ive">티켓 예매하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 멤버십 인증 섹션 (Membership Section) -->
+    <section id="membership-section" class="spa-section">
+      <div class="glass-container container-sm">
+        <div class="auth-header text-center">
+          <i class="fa-solid fa-id-card-clip auth-icon-large purple-glow"></i>
+          <h2>아이돌 멤버십 선예매 인증</h2>
+          <p>선예매 참여를 위해 본인의 아티스트 공식 팬클럽 멤버십 정보를 입력해 주세요.</p>
+        </div>
+
+        <form id="membership-form" class="form-grid">
+          <div class="form-group">
+            <label for="member-group">아티스트 선택</label>
+            <select id="member-group" required>
+              <option value="" disabled selected>예매하려는 그룹을 선택하세요</option>
+              <option value="aespa">aespa (MY)</option>
+              <option value="nct">NCT DREAM (NCTzen DREAM)</option>
+              <option value="ive">IVE (DIVE)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="member-generation">팬클럽 기수</label>
+            <input type="number" id="member-generation" min="1" max="10" placeholder="예: 1" required>
+          </div>
+
+          <div class="form-group">
+            <label for="member-number">멤버십 번호</label>
+            <input type="text" id="member-number" placeholder="예: IDOL-12345678" required>
+            <small class="form-help">형식: IDOL-숫자 8자리 (예: IDOL-12345678)</small>
+          </div>
+
+          <div class="form-group">
+            <label for="member-name">이름 (실명)</label>
+            <input type="text" id="member-name" placeholder="가입자 실명을 입력하세요" required>
+          </div>
+
+          <div class="form-group">
+            <label for="member-birth">생년월일 (8자리)</label>
+            <input type="text" id="member-birth" placeholder="예: 20000101" maxlength="8" required>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-block" id="submit-membership-btn">멤버십 인증하기</button>
+            <button type="button" class="btn btn-outline btn-block" id="cancel-membership-btn">취소</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- 3. 예매 섹션 (Booking Section) -->
+    <section id="booking-section" class="spa-section">
+      <div class="booking-container">
+        
+        <!-- 왼쪽: 날짜/회차 및 좌석 선택 제어판 -->
+        <div class="booking-control-panel glass-container">
+          <!-- 예매 단계 인디케이터 -->
+          <div class="booking-steps">
+            <div class="step active" id="step-indicator-1">1. 일정 선택</div>
+            <div class="step-line"></div>
+            <div class="step" id="step-indicator-2">2. 좌석 선택</div>
+          </div>
+
+          <div class="concert-mini-info" id="booking-concert-info">
+            <!-- 선택한 공연의 미니 정보가 로드됨 -->
+          </div>
+
+          <!-- Step 1: 날짜 및 회차 선택 컨테이너 -->
+          <div id="booking-step-1-content" class="booking-step-content active">
+            <div class="booking-sub-section">
+              <h3><i class="fa-regular fa-calendar-days"></i> 예매 날짜 선택</h3>
+              <div class="date-picker-grid" id="date-select-container">
+                <!-- 날짜 버튼 동적 생성 -->
+              </div>
+            </div>
+
+            <div class="booking-sub-section">
+              <h3><i class="fa-regular fa-clock"></i> 회차(시간) 선택</h3>
+              <div class="time-picker-grid" id="time-select-container">
+                <!-- 회차 버튼 동적 생성 -->
+                <p class="helper-text">날짜를 먼저 선택해 주세요.</p>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block margin-top-lg" id="go-to-seats-btn" disabled>좌석 선택 단계로 이동 <i class="fa-solid fa-chevron-right"></i></button>
+          </div>
+
+          <!-- Step 2: 좌석 선택 정보 요약 컨테이너 (좌석 선택 시만 보임) -->
+          <div id="booking-step-2-content" class="booking-step-content">
+            <div class="booking-sub-section">
+              <h3><i class="fa-solid fa-circle-info"></i> 좌석 등급 및 가격</h3>
+              <div class="seat-legend-list">
+                <div class="legend-item"><span class="legend-box vip"></span> <strong>VIP석</strong> : 154,000원</div>
+                <div class="legend-item"><span class="legend-box r-seat"></span> <strong>R석</strong> : 132,000원</div>
+                <div class="legend-item"><span class="legend-box s-seat"></span> <strong>S석</strong> : 110,000원</div>
+              </div>
+            </div>
+
+            <div class="booking-sub-section selected-seats-panel">
+              <h3><i class="fa-solid fa-chair"></i> 선택한 좌석</h3>
+              <div id="selected-seats-list" class="selected-seats-list">
+                <!-- 선택된 좌석 칩 렌더링 -->
+                <span class="no-selection-text">선택된 좌석이 없습니다.</span>
+              </div>
+            </div>
+
+            <div class="booking-sub-section total-price-panel">
+              <div class="price-row">
+                <span>선택 좌석 수</span>
+                <span id="selected-seats-count">0석</span>
+              </div>
+              <div class="price-row total">
+                <span>총 결제금액</span>
+                <span id="selected-seats-price" class="neon-text-cyan">0원</span>
+              </div>
+            </div>
+
+            <div class="booking-actions">
+              <button class="btn btn-outline" id="back-to-dates-btn"><i class="fa-solid fa-chevron-left"></i> 일정 변경</button>
+              <button class="btn btn-success" id="complete-booking-btn" disabled><i class="fa-solid fa-check"></i> 예매 완료하기</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 오른쪽: 실시간 좌석 배치도 (Step 2에서만 활성화되며, Step 1에서는 안내 메시지 표시) -->
+        <div class="booking-screen-panel glass-container">
+          <!-- 좌석 배치도 대기 화면 -->
+          <div class="seats-placeholder-overlay active" id="seats-placeholder">
+            <div class="text-center">
+              <i class="fa-solid fa-hand-pointer placeholder-icon purple-glow"></i>
+              <h3>일정을 선택해 주세요</h3>
+              <p>좌석 배치도를 확인하려면 왼쪽 영역에서 날짜와 회차를 선택한 후<br>'좌석 선택 단계로 이동' 버튼을 클릭해 주세요.</p>
+            </div>
+          </div>
+
+          <!-- 실제 좌석 배치도 영역 -->
+          <div class="seats-layout-container" id="seats-layout-area">
+            <div class="stage-container">
+              <div class="stage-lights"></div>
+              <div class="stage-board">STAGE</div>
+            </div>
+
+            <!-- 스크롤 가능한 좌석 맵 -->
+            <div class="seat-map-wrapper">
+              <div class="seat-grid" id="seat-grid-container">
+                <!-- 동적으로 바둑판 좌석 생성 -->
+              </div>
+            </div>
+
+            <!-- 좌석 범례 요약 -->
+            <div class="seat-status-legend">
+              <div class="status-item"><span class="status-dot available"></span> 예매 가능</div>
+              <div class="status-item"><span class="status-dot selected"></span> 선택됨</div>
+              <div class="status-item"><span class="status-dot soldout"></span> 예매 불가 (솔드아웃)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. 마이페이지 섹션 (My Page Section) -->
+    <section id="mypage-section" class="spa-section">
+      <div class="mypage-layout">
+        
+        <!-- 프로필 요약 카드 -->
+        <div class="mypage-profile-card glass-container">
+          <div class="profile-header">
+            <div class="profile-avatar">
+              <i class="fa-solid fa-user-astronaut"></i>
+            </div>
+            <h2 id="mypage-username">로그인이 필요합니다</h2>
+            <p id="mypage-email" class="text-muted"></p>
+          </div>
+
+          <hr class="profile-divider">
+
+          <div class="profile-details">
+            <h3><i class="fa-solid fa-shield-halved"></i> 팬클럽 멤버십 상태</h3>
+            <div id="mypage-membership-status-list" class="membership-status-list">
+              <!-- 멤버십 인증 리스트가 동적으로 생성됨 -->
+              <p class="text-muted text-center py-2">인증된 멤버십이 없습니다.</p>
+            </div>
+            <a href="#membership" class="btn btn-outline btn-block margin-top-md" id="mypage-go-verify-btn">신규 멤버십 인증하기 <i class="fa-solid fa-plus"></i></a>
+          </div>
+
+          <div class="profile-footer text-center">
+            <button class="btn btn-danger-link" id="reset-app-data-btn"><i class="fa-solid fa-trash-can"></i> 가상 데이터 전체 초기화</button>
+          </div>
+        </div>
+
+        <!-- 내 예매 내역 목록 -->
+        <div class="mypage-tickets-panel glass-container">
+          <div class="panel-header">
+            <h2><i class="fa-solid fa-ticket-simple"></i> 내가 예매한 티켓 내역</h2>
+            <span class="badge" id="my-ticket-count">0장</span>
+          </div>
+
+          <div class="tickets-container" id="my-tickets-list">
+            <!-- 예매 내역이 티켓 카드 형태로 동적으로 렌더링됨 -->
+            <div class="empty-tickets text-center">
+              <i class="fa-solid fa-receipt empty-icon"></i>
+              <h3>예매 내역이 없습니다.</h3>
+              <p>아티스트의 멤버십 인증을 마친 후 예매를 시작해 보세요!</p>
+              <a href="#home" class="btn btn-primary margin-top-md" id="mypage-home-redirect-btn">공연 목록 보러 가기</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 로그인 / 회원가입 모달 -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="modal-content glass-container container-sm">
+      <button class="modal-close-btn" id="close-auth-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+      
+      <!-- 모달 탭 헤더 -->
+      <div class="modal-tabs">
+        <button class="modal-tab active" id="tab-login-btn">로그인</button>
+        <button class="modal-tab" id="tab-register-btn">회원가입</button>
+      </div>
+
+      <!-- 로그인 폼 영역 -->
+      <div class="modal-tab-content active" id="login-form-container">
+        <div class="auth-header text-center">
+          <h2>다시 만나서 반가워요!</h2>
+          <p>Ticket-Idol에 로그인하여 선예매에 참여하세요.</p>
+        </div>
+        <form id="login-form" class="form-grid">
+          <div class="form-group">
+            <label for="login-id">아이디</label>
+            <input type="text" id="login-id" placeholder="아이디를 입력하세요" required>
+          </div>
+          <div class="form-group">
+            <label for="login-pw">비밀번호</label>
+            <input type="password" id="login-pw" placeholder="비밀번호를 입력하세요" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block margin-top-md">로그인</button>
+        </form>
+      </div>
+
+      <!-- 회원가입 폼 영역 -->
+      <div class="modal-tab-content" id="register-form-container">
+        <div class="auth-header text-center">
+          <h2>새로운 계정 만들기</h2>
+          <p>가입하고 다양한 가상 아이돌 공연을 예매해 보세요.</p>
+        </div>
+        <form id="register-form" class="form-grid">
+          <div class="form-group">
+            <label for="register-id">아이디</label>
+            <input type="text" id="register-id" minlength="4" placeholder="4자 이상 입력하세요" required>
+          </div>
+          <div class="form-group">
+            <label for="register-pw">비밀번호</label>
+            <input type="password" id="register-pw" minlength="6" placeholder="6자 이상 입력하세요" required>
+          </div>
+          <div class="form-group">
+            <label for="register-name">이름</label>
+            <input type="text" id="register-name" placeholder="이름을 입력하세요" required>
+          </div>
+          <div class="form-group">
+            <label for="register-email">이메일 주소</label>
+            <input type="email" id="register-email" placeholder="example@email.com" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block margin-top-md">회원가입 완료</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 예매 완료 성공 팝업 / 알림창 모달 -->
+  <div class="modal-overlay" id="success-modal">
+    <div class="modal-content glass-container container-sm text-center success-modal-content">
+      <div class="success-icon-animation">
+        <div class="circle-check-wrapper">
+          <i class="fa-solid fa-circle-check emerald-glow"></i>
+        </div>
+      </div>
+      <h2>티켓 예매 성공!</h2>
+      <p>가상 티켓팅이 성공적으로 완료되었습니다.</p>
+      
+      <div class="ticket-receipt-card" id="receipt-card-container">
+        <!-- 동적으로 가상 티켓 영수증이 주입됨 -->
+      </div>
+
+      <p class="text-muted text-sm margin-top-sm">예매된 정보는 브라우저의 localStorage에 보존되며,<br>마이페이지에서 확인할 수 있습니다.</p>
+      
+      <button class="btn btn-primary btn-block margin-top-lg" id="close-success-modal-btn">마이페이지로 이동</button>
+    </div>
+  </div>
+
+  <!-- 토스트 알림 컨테이너 (화면 하단 알림) -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- 스크립트 연동 -->
+  <script src="script.js"></script>
+</body>
+</html>
